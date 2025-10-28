@@ -1,0 +1,192 @@
+.header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .employee-dashboard-heading {
+  color: var(--dark-purple-text);
+  margin-bottom: 0.5rem;
+}
+.description {
+  color: var(--gray-text);
+}
+.btn{
+  height: 50px;
+  width: 150px;
+  font-size: medium;
+  background-color: var(--p-purple-400);
+  border-radius: 8px;
+ border: none;
+ font-weight: 500;
+ &:hover{
+  cursor: pointer;
+  background-color: var(--p-purple-500);
+ }
+}
+}
+.dashboard-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 2fr));
+  gap: 40px;
+  margin-top: 40px;
+  .summary-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    border: solid var(--p-purple-300);
+    border-width: 1px;
+    border-radius: 12px;
+
+    transition: translate 0.3s ease;
+
+    &.summary-box:nth-of-type(1) {
+      background-color: var(--p-purple-200);
+    }
+    &.summary-box:nth-of-type(2) {
+      background-color: var(--p-blue-200);
+    }
+    &.summary-box:nth-of-type(3) {
+      background-color: var(--p-green-200);
+    }
+    &.summary-box:nth-of-type(4) {
+      background-color: var(--p-orange-200);
+    }
+    &:hover {
+      translate: 0px -3px;
+      box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.3);
+      .total-Project-right {
+        background-color: var(--p-purple-300);
+      }
+      .total-user-icon {
+        background-color: var(--p-blue-300);
+      }
+      .active-tasks-icon {
+        background-color: var(--p-green-300);
+      }
+      .managers-icon {
+        background-color: var(--p-orange-300);
+      }
+    }
+
+    .card-items {
+      p {
+        font-size: 0.875rem;
+        color: var(--gray-text);
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+      h2 {
+        margin-top: 1px;
+        color: var(--dark-purple-text);
+        font-size: 1.875rem;
+      }
+    }
+    .total-Project-right {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 50px;
+      width: 50px;
+      background-color: var(--p-purple-200);
+      border-radius: 12px;
+    }
+    .total-user-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 50px;
+      width: 50px;
+      background-color: var(--p-blue-200);
+      border-radius: 12px;
+    }
+    .active-tasks-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 50px;
+      width: 50px;
+      background-color: var(--p-green-200);
+      border-radius: 12px;
+    }
+    .managers-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 50px;
+      width: 50px;
+      background-color: var(--p-orange-200);
+      border-radius: 12px;
+    }
+  }
+}
+
+.visul-insights {
+  margin-top: 50px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  width: 100%;
+
+  .bar,
+  .pi {
+    padding: 1.5rem;
+    border-radius: 8px;
+    height: 410px;
+    display: flex;
+    flex-direction: column;
+   
+
+    &:first-child{
+      background-color: var(--p-purple-50);
+    }
+    &:last-child{
+      background-color: var(--p-blue-50);
+    }
+
+    .chart-container {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+
+      .chart-header {
+        text-align: center;
+        margin-bottom: 1rem;
+
+        h4 {
+          margin: 0;
+          font-size: 1.25rem;
+          font-weight: 500;
+          color: var(--p-purple-500);
+        }
+      }
+
+      .chart-wrapper2 {
+        flex: 1;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 20px;
+
+    .bar,
+    .pi {
+      width: 100%;
+      padding: 1rem;
+      box-sizing: border-box;
+    }
+  }
+}
+
+.emp-tabel{
+  margin-top: 40px;
+  border: 1px solid var(--p-purple-400);
+  border-radius: 8px;
+ 
+}

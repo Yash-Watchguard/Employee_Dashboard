@@ -1,0 +1,117 @@
+<p-toast position="top-right"></p-toast>
+<div class="modal-overlay">
+  <div class="modal-content">
+    <header class="modal-header">
+      <div class="modal-title-container">
+        <i class="plus-icon">+</i>
+        <h2>Edit Employee data</h2>
+      </div>
+      <p class="modal-subtitle">make changes in the emp data</p>
+    </header>
+
+    <form (ngSubmit)="OnSubmit()" [formGroup]="userForm">
+      <div class="form-group">
+        <label for="name" class="form-label">Name *</label>
+        <input
+          type="text"
+          class="form-input"
+          id="name"
+          formControlName="name"
+          placeholder="Enter name"
+        />
+        @if(f['name'].touched && f['name'].invalid){
+        <div class="validation-error">
+          @if(f['name'].errors?.['required']){
+          <div>Name is required.</div>
+          }
+        </div>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="email" class="form-label">Email</label>
+        <input
+          type="email"
+          class="form-input"
+          id="email"
+          formControlName="email"
+          placeholder="Enter email"
+        />
+        @if(f['email'].touched && f['email'].invalid){
+        <div class="validation-error">
+          @if(f['email'].errors?.['required']){
+          <div>Email is required.</div>
+          } @if(f['email'].errors?.['email']){
+          <div>Please enter a valid email.</div>
+          }
+        </div>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="department" class="form-label">Department</label>
+        <select class="form-input" id="department" formControlName="department">
+          <option value="" disabled>Select department</option>
+          @for(dept of departmentList; track dept){
+          <option [value]="dept">{{ dept }}</option>
+          }
+        </select>
+        @if(f['department'].touched && f['department'].invalid){
+        <div class="validation-error">
+          @if(f['department'].errors?.['required']){
+          <div>Department is required.</div>
+          }
+        </div>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="position" class="form-label">Position</label>
+        <input
+          type="text"
+          class="form-input"
+          id="position"
+          formControlName="position"
+          placeholder="Enter position"
+        />
+        @if(f['position'].touched && f['position'].invalid){
+        <div class="validation-error">
+          @if(f['position'].errors?.['required']){
+          <div>Position is required.</div>
+          }
+        </div>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="salary" class="form-label">Salary</label>
+        <input
+          type="number"
+          class="form-input"
+          id="salary"
+          formControlName="salary"
+          placeholder="Enter salary"
+        />
+        @if(f['salary'].touched && f['salary'].invalid){
+        <div class="validation-error">
+          @if(f['salary'].errors?.['required']){
+          <div>Salary is required.</div>
+          } @if(f['salary'].errors?.['min']){
+          <div>Salary must be a positive number.</div>
+          }
+        </div>
+        }
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="cancel-btn" (click)="onCancel()">
+          Cancel
+        </button>
+        <button type="submit" class="submit-btn" [disabled]="userForm.invalid">
+          Add Employee
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+

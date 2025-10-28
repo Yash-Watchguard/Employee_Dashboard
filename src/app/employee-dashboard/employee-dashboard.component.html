@@ -1,0 +1,121 @@
+<p-confirmdialog></p-confirmdialog>
+<p-toast></p-toast>
+<div class="emp-dashboard">
+  <div class="header">
+    <div class="description">
+      <h1 class="employee-dashboard-heading">Employee Dashboard</h1>
+      <p class="description">Manage your team and track workforce insights</p>
+    </div>
+    <div class="addemployee">
+      <button class="btn" (click)="openAddEmployee()">+ Add Employee</button>
+    </div>
+  </div>
+
+<div class="dashboard-summary">
+  <div class="summary-box">
+    <div class="card-items">
+      <p>Total Employees</p>
+      <h2>{{ allEmployees.length }}</h2>
+    </div>
+    <div class="total-Project-right">
+      <i class="pi pi-users" style="font-size: 1.5rem"></i>
+    </div>
+  </div>
+  <div class="summary-box">
+    <div class="card-items">
+      <p>Departments</p>
+      <h2>6</h2>
+    </div>
+    <div class="total-user-icon">
+      <i class="pi pi-shopping-bag" style="font-size: 1.5rem"></i>
+    </div>
+  </div>
+
+  <div class="summary-box">
+    <div class="card-items">
+      <p>Avg. Salary</p>
+      <h2>{{ avgSalary }}</h2>
+    </div>
+    <div class="active-tasks-icon">
+      <i class="pi pi-indian-rupee" style="font-size: 1.5rem"></i>
+    </div>
+  </div>
+  <div class="summary-box">
+    <div class="card-items">
+      <p>Total Payroll</p>
+      <h2>{{ totalSalary }}</h2>
+    </div>
+    <div class="managers-icon">
+      <i class="pi pi-chart-line" style="font-size: 1.5rem"></i>
+    </div>
+  </div>
+</div>
+<div class="visul-insights">
+  <div class="bar">
+    <div class="chart-container">
+      <div class="chart-header">
+        <h4>Department Distribution - Bar Chart</h4>
+      </div>
+      <div class="chart-wrapper1">
+        <p-chart
+          type="bar"
+          [data]="basicData"
+          [options]="basicOptions"
+        ></p-chart>
+      </div>
+    </div>
+  </div>
+  <div class="pi">
+    <div class="chart-container">
+      <div class="chart-header">
+        <h4>Department Distribution - Pie Chart</h4>
+      </div>
+      <div class="chart-wrapper2">
+        <p-chart type="pie" [data]="pieData" [options]="chartOptions"></p-chart>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="emp-tabel">
+  <div class="card">
+    <p-table [value]="allEmployees" [tableStyle]="{ 'min-width': '50rem' }">
+        <ng-template #header>
+            <tr >
+                <th >id</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Department</th>
+                <th>Position</th>
+                <th>Salary</th>
+                <th>Actions</th>
+            </tr>
+        </ng-template>
+        <ng-template #body let-emp>
+            <tr>
+                <td>{{ emp.id }}</td>
+                <td>{{ emp.name }}</td>
+                <td>{{ emp.email }}</td>
+                <td>{{ emp.department}}</td>
+                <td>{{emp.position}}</td>
+                <td>{{emp.salary}}</td>
+                <td>
+                  <div class="btn">
+                    <button class="edit" (click)="openLoadEditEmp(emp.id)">e</button>
+                    <button class="delete" (click)="onDelete(emp.id)">d</button>
+                  </div>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+</div>
+</div>
+
+@if(loadAddEmpModal){
+  <app-add-employee (closeAddEmp)="closeAddEmployee()"></app-add-employee>
+}
+@if(loadEditEmpModal){
+ <app-edit-emp [empId]="empId" (closeEditEmp)="closeEditModal()"></app-edit-emp>
+}
+
