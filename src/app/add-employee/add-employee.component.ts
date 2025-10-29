@@ -45,11 +45,11 @@ export class AddEmployeeComponent {
     salary: new FormControl('', Validators.min(0)),
   });
 
-  get f() {
+  get formControlsGetter() {
     return this.userForm.controls;
   }
 
-  OnSubmit(): void {
+  onSubmit(): void {
     if (this.userForm.invalid) {
       this.userForm.markAllAsTouched();
       return;
@@ -61,6 +61,7 @@ export class AddEmployeeComponent {
       summary: 'Success',
       detail: 'Employee added successfully',
     });
+    this.onCancel();
   }
 
   onCancel() {

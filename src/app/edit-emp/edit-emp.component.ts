@@ -65,6 +65,7 @@ constructor(
       summary: 'Success',
       detail: 'Employee updated successfully',
     });
+    this.onCancel();
   }
   onCancel() {
     this.closeEditEmp.emit();

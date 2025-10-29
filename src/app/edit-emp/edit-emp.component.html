@@ -6,7 +6,7 @@
         <i class="plus-icon"></i>
         <h2>Edit Employee data</h2>
       </div>
-      <p class="modal-subtitle">make changes in the emp data</p>
+      
     </header>
 
     <form (ngSubmit)="OnSubmit()" [formGroup]="userForm">
@@ -108,7 +108,7 @@
           Cancel
         </button>
         <button type="submit" class="submit-btn" [disabled]="userForm.invalid">
-          Add Employee
+          Save
         </button>
       </div>
     </form>

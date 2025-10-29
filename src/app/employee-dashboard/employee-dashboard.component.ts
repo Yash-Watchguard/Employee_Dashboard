@@ -11,7 +11,7 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmDialog } from 'primeng/confirmdialog';
-import { Toast } from "primeng/toast";
+import { Toast } from 'primeng/toast';
 import { TableModule } from 'primeng/table';
 
 import { Observable } from 'rxjs';
@@ -25,28 +25,33 @@ import { EditEmpComponent } from '../edit-emp/edit-emp.component';
 
 @Component({
   selector: 'app-employee-dashboard',
-  imports: [ChartModule, CommonModule, AddEmployeeComponent, TableModule, EditEmpComponent, ConfirmDialog, Toast],
+  imports: [
+    ChartModule,
+    CommonModule,
+    AddEmployeeComponent,
+    TableModule,
+    EditEmpComponent,
+    ConfirmDialog,
+    Toast,
+  ],
   templateUrl: './employee-dashboard.component.html',
   styleUrl: './employee-dashboard.component.scss',
-  providers:[ConfirmationService, MessageService]
+  providers: [ConfirmationService, MessageService],
 })
 export class EmployeeDashboardComponent implements OnInit {
   constructor(
     private employeeService: EmployeeService,
     private cd: ChangeDetectorRef,
-    private messageService:MessageService,
+    private messageService: MessageService,
     private confirmationService: ConfirmationService
   ) {}
 
-  loadEditEmpModal:boolean=false;
-  loadAddEmpModal:boolean=false;
+  loadEditEmpModal: boolean = false;
+  loadAddEmpModal: boolean = false;
 
   basicData: any;
-
   basicOptions: any;
-
   pieData: any;
-
   chartOptions: any;
 
   platformId = inject(PLATFORM_ID);
@@ -66,12 +71,12 @@ export class EmployeeDashboardComponent implements OnInit {
   chartLabels: string[] = [];
 
   chartData: number[] = [];
-  
-  empId=0;
+
+  empId = 0;
   totalSalary = 0;
   avgSalary = 0;
 
-  private employee$!: Observable<Employee[]>;
+  employee$!: Observable<Employee[]>;
 
   ngOnInit(): void {
     this.loadEmployeeStates();
@@ -111,7 +116,8 @@ export class EmployeeDashboardComponent implements OnInit {
     });
   }
 
-  initChart() {
+  //  taken from this
+  initChart(): void {
     if (isPlatformBrowser(this.platformId)) {
       const documentStyle = getComputedStyle(document.documentElement);
       const textColor = documentStyle.getPropertyValue('--p-text-color');
@@ -168,6 +174,7 @@ export class EmployeeDashboardComponent implements OnInit {
             beginAtZero: true,
             ticks: {
               color: textColorSecondary,
+              stepSize: 1,
             },
             grid: {
               color: surfaceBorder,
@@ -213,31 +220,37 @@ export class EmployeeDashboardComponent implements OnInit {
     }
   }
 
-  openAddEmployee(){
-this.loadAddEmpModal=true;
-  }
-  closeAddEmployee(){
-this.loadAddEmpModal=false;
-  }
-  openLoadEditEmp(id:number){
-     this.empId=id;
-     this.loadEditEmpModal=true;
-  }
-  closeEditModal(){
-      this.empId=0;
-      this.loadEditEmpModal=false;
+  openAddEmployee(): void {
+    this.loadAddEmpModal = true;
   }
 
-  onDelete(id:number){
-    console.log(id)
-    this.confirmationService.confirm({
-            header: 'Are you sure?',
-            message: 'Please confirm to proceed.',
-            accept: () => {
-              this.employeeService.deleteEmployee(id);
-                this.messageService.add({ severity: 'success', summary: 'Success', detail: 'User Deleted Sucessfully' });
-            },
-        });
+  closeAddEmployee(): void {
+    this.loadAddEmpModal = false;
   }
-  
+
+  openLoadEditEmp(id: number): void {
+    this.empId = id;
+    this.loadEditEmpModal = true;
+  }
+
+  closeEditModal(): void {
+    this.empId = 0;
+    this.loadEditEmpModal = false;
+  }
+
+  onDelete(id: number) {
+    console.log(id);
+    this.confirmationService.confirm({
+      header: 'Are you sure?',
+      message: 'Please confirm to proceed.',
+      accept: () => {
+        this.employeeService.deleteEmployee(id);
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'User Deleted Sucessfully',
+        });
+      },
+    });
+  }
 }
