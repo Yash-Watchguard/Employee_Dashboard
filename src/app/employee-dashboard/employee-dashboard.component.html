@@ -24,7 +24,7 @@
   <div class="summary-box">
     <div class="card-items">
       <p>Departments</p>
-      <h2>6</h2>
+      <h2>5</h2>
     </div>
     <div class="total-user-icon">
       <i class="pi pi-shopping-bag" style="font-size: 1.5rem"></i>
@@ -101,8 +101,8 @@
                 <td>{{emp.salary}}</td>
                 <td>
                   <div class="btn">
-                    <button class="edit" (click)="openLoadEditEmp(emp.id)">e</button>
-                    <button class="delete" (click)="onDelete(emp.id)">d</button>
+                    <button class="edit" (click)="openLoadEditEmp(emp.id)"><i class="pi pi-user-edit" ></i></button>
+                    <button class="delete" (click)="onDelete(emp.id)" ><i class="pi pi-trash" style="color: red;"></i></button>
                   </div>
                 </td>
             </tr>

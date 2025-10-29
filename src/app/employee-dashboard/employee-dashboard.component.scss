@@ -190,3 +190,31 @@
   border-radius: 8px;
  
 }
+.btn{
+  // display: flex;
+  // align-items: flex-start;
+  // justify-content: center;
+  gap: 10px;
+  .edit {
+    height:30px;
+    width:30px;
+    border-radius: 8px;
+    margin-right: 20px;
+    border: none;
+    &:hover{
+      cursor: pointer;
+    }
+  }
+  .delete{
+    height:30px;
+    width:30px;
+    border-radius: 8px;
+    border: none;
+    &:hover{
+      background-color:var(--p-red-400);
+      
+      cursor: pointer;
+    }
+    
+  }
+}

@@ -59,16 +59,24 @@ export class EmployeeService {
       email: 'krishna32023@gmail.com',
       position: 'software engineer 1',
       department: Department.FINANCE,
-      salary: 30000,
+      salary: 300000,
     },
     {
       id: 8,
-      name: 'krishna',
+      name: 'krishna goyal',
       email: 'krishna32023@gmail.com',
       position: 'software engineer 1',
       department: Department.FINANCE,
-      salary: 30000,
+      salary: 300000,
     },
+    {
+      id: 9,
+      name: 'saloni',
+      email: 'saloni32023@gmail.com',
+      position: 'executive',
+      department: Department.SALES,
+      salary: 30000,
+    }
   ];
 
   //    create  a behaviour subject
@@ -79,6 +87,7 @@ export class EmployeeService {
   employees$ = this.employeeSubject.asObservable();
 
   constructor() {
+    this.saveToLocalStorage();
     this.loadFromLocalStorage();
   }
 

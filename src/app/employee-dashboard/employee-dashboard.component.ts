@@ -3,23 +3,25 @@ import {
   Component,
   effect,
   inject,
+  OnDestroy,
   OnInit,
   PLATFORM_ID,
 } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmDialog } from 'primeng/confirmdialog';
-
+import { Toast } from "primeng/toast";
 import { TableModule } from 'primeng/table';
+
+import { Observable } from 'rxjs';
+
 import { Employee } from '../models/employee.model';
 import { EmployeeService } from '../services/employee.service';
-import { Observable } from 'rxjs';
 import { AppConfigService } from '../services/app-config.service';
 import { ChartModule } from 'primeng/chart';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { AddEmployeeComponent } from '../add-employee/add-employee.component';
 import { EditEmpComponent } from '../edit-emp/edit-emp.component';
-import { Toast } from "primeng/toast";
 
 @Component({
   selector: 'app-employee-dashboard',
@@ -35,6 +37,7 @@ export class EmployeeDashboardComponent implements OnInit {
     private messageService:MessageService,
     private confirmationService: ConfirmationService
   ) {}
+
   loadEditEmpModal:boolean=false;
   loadAddEmpModal:boolean=false;
 
@@ -61,6 +64,7 @@ export class EmployeeDashboardComponent implements OnInit {
   allEmployees: Employee[] = [];
 
   chartLabels: string[] = [];
+
   chartData: number[] = [];
   
   empId=0;
@@ -125,10 +129,11 @@ export class EmployeeDashboardComponent implements OnInit {
             label: 'Employees',
             data: this.chartData,
             backgroundColor: [
-              '',
-              'var(--p-red-500)',
-              'var(--p-red-500)',
-              'var(--p-red-500)',
+              'rgb(249, 115, 22)',
+              'rgb(6, 182, 212)',
+              'rgb(107, 114, 128)',
+              'rgb(139, 92, 246)',
+              'rgba(44, 163, 113, 1)',
             ],
             borderColor: [
               'rgb(249, 115, 22)',
@@ -232,7 +237,7 @@ this.loadAddEmpModal=false;
               this.employeeService.deleteEmployee(id);
                 this.messageService.add({ severity: 'success', summary: 'Success', detail: 'User Deleted Sucessfully' });
             },
-            
         });
   }
+  
 }

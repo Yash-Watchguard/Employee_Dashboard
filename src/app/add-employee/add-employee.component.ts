@@ -1,17 +1,18 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+
 import {
   FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { CommonModule} from '@angular/common';
 
 import { Toast } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 import { Department, Employee } from '../models/employee.model';
 import { EmployeeService } from '../services/employee.service';
-import { CommonModule, NgIf } from '@angular/common';
-import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-add-employee',
