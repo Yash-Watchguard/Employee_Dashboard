@@ -1,4 +1,4 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, Signal, signal, WritableSignal } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
@@ -7,19 +7,19 @@ export class AppConfigService {
   private _transitionComplete = signal(false);
   private _preset = signal<string>('');
 
-  transitionComplete() {
+  transitionComplete(): WritableSignal<boolean> {
     return this._transitionComplete;
   }
 
-  preset() {
+  preset(): WritableSignal<string> {
     return this._preset;
   }
 
-  setTransitionComplete(value: boolean) {
+  setTransitionComplete(value: boolean): void {
     this._transitionComplete.set(value);
   }
 
-  setPreset(value: string) {
+  setPreset(value: string): void {
     this._preset.set(value);
   }
 }

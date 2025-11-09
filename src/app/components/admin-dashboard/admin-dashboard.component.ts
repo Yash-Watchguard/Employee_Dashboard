@@ -16,15 +16,17 @@ import { TableModule } from 'primeng/table';
 
 import { Observable } from 'rxjs';
 
-import { Employee } from '../models/employee.model';
-import { EmployeeService } from '../services/employee.service';
-import { AppConfigService } from '../services/app-config.service';
+import { Role, User } from '../../models/employee.model';
+import { EmployeeService } from '../../services/employee.service';
+import { AppConfigService } from '../../services/app-config.service';
 import { ChartModule } from 'primeng/chart';
-import { AddEmployeeComponent } from '../add-employee/add-employee.component';
-import { EditEmpComponent } from '../edit-emp/edit-emp.component';
+import { AddEmployeeComponent } from '../../shared/add-employee/add-employee.component';
+import { EditEmpComponent } from '../../shared/edit-emp/edit-emp.component';
+import { RouterLink } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-employee-dashboard',
+  selector: 'app-admin-dashboard',
   imports: [
     ChartModule,
     CommonModule,
@@ -33,12 +35,14 @@ import { EditEmpComponent } from '../edit-emp/edit-emp.component';
     EditEmpComponent,
     ConfirmDialog,
     Toast,
+    RouterLink,
+    FormsModule
   ],
-  templateUrl: './employee-dashboard.component.html',
-  styleUrl: './employee-dashboard.component.scss',
+  templateUrl: './admin-dashboard.component.html',
+  styleUrl: './admin-dashboard.component.scss',
   providers: [ConfirmationService, MessageService],
 })
-export class EmployeeDashboardComponent implements OnInit {
+export class AdminDashboardComponent implements OnInit {
   constructor(
     private employeeService: EmployeeService,
     private cd: ChangeDetectorRef,
@@ -46,8 +50,23 @@ export class EmployeeDashboardComponent implements OnInit {
     private confirmationService: ConfirmationService
   ) {}
 
+  searchTerm:string='';
+
   loadEditEmpModal: boolean = false;
   loadAddEmpModal: boolean = false;
+
+  allEmployees: User[] = [];
+  filteredEmployees: User[] = [];
+
+  chartLabels: string[] = [];
+
+  chartData: number[] = [];
+
+  empId = 0;
+  totalSalary = 0;
+  avgSalary = 0;
+
+  employee$!: Observable<User[]>;
 
   basicData: any;
   basicOptions: any;
@@ -66,21 +85,13 @@ export class EmployeeDashboardComponent implements OnInit {
     }
   });
 
-  allEmployees: Employee[] = [];
-
-  chartLabels: string[] = [];
-
-  chartData: number[] = [];
-
-  empId = 0;
-  totalSalary = 0;
-  avgSalary = 0;
-
-  employee$!: Observable<Employee[]>;
+  
 
   ngOnInit(): void {
     this.loadEmployeeStates();
     this.initChart();
+    this.employeeService.saveToLocalStorage();
+    this.employeeService.loadFromLocalStorage();
   }
 
   loadEmployeeStates(): void {
@@ -92,6 +103,9 @@ export class EmployeeDashboardComponent implements OnInit {
 
     this.employee$.subscribe((emp) => {
       this.allEmployees = emp;
+      this.filteredEmployees=emp.filter((emp)=>{
+       return emp.role===Role.Employee;
+      });
 
       this.totalSalary = this.allEmployees.reduce(
         (sum, emp) => sum + emp.salary,
@@ -219,6 +233,26 @@ export class EmployeeDashboardComponent implements OnInit {
       this.cd.markForCheck();
     }
   }
+
+  
+onSearch(): void {
+
+  const term=this.searchTerm.toLowerCase();
+  this.filteredEmployees=this.allEmployees.filter((emp)=>
+     emp.role!=Role.Admin && (emp.name.toLowerCase().includes(term)||
+      emp.email.toLowerCase().includes(term)||
+      emp.position.toLowerCase().includes(term)||
+      emp.department.toLowerCase().includes(term)||
+      emp.salary.toString().includes(term))
+  );
+  // const term = this.searchTerm.toLowerCase();
+  // this.filteredEmployees = this.allEmployees.filter((emp) =>
+  //   emp.name.toLowerCase().includes(term) ||
+  //   emp.email.toLowerCase().includes(term) ||
+  //   emp.department.toLowerCase().includes(term) ||
+  //   emp.position.toLowerCase().includes(term)
+  // );
+}
 
   openAddEmployee(): void {
     this.loadAddEmpModal = true;

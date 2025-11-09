@@ -9,10 +9,11 @@
 
 * {
   font-family: sans-serif;
+  
 }
 
-body {
-  margin: 50px 90px 20px 90px;
-  padding: 0;
-  background-color: #ffff;
+i.pi {
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
+

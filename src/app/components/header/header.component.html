@@ -1,0 +1,27 @@
+<header class="dashboard-header">
+  <div class="header-left">
+    <i class="pi pi-shield header-icon"></i>
+    <div class="header-title">
+      <h2>Adminity</h2>
+      <span>{{user?.role}} Portal</span>
+    </div>
+  </div>
+
+  <div class="header-right">
+    <div class="user-info">
+      <div class="user-avatar">
+        <span>{{user?.name?.at(0)}}</span>
+      </div>
+      <div class="user-role">
+        <span class="user-name">{{user?.name}}</span>
+        <span class="role-badge">{{user?.role}}</span>
+      </div>
+    </div>
+
+    <button class="logout-btn" (click)="onLogout()">
+      <i class="pi pi-sign-out"></i>
+      Logout
+    </button>
+  </div>
+</header>
+

@@ -1,5 +1,6 @@
 <p-confirmdialog></p-confirmdialog>
 <p-toast></p-toast>
+
 <div class="emp-dashboard">
   <div class="header">
     <div class="description">
@@ -80,11 +81,26 @@
       </div>
     </div>
   </div>
-
+  <div class="employee-search-bar">
+  <span class="p-input-icon-left search-bar">
+    <i class="pi pi-search"></i>
+    <input
+      pInputText
+      type="text"
+      placeholder="Search employees..."
+      [(ngModel)]="searchTerm"
+      (input)="onSearch()"
+    />
+  </span>
+</div>
   <div class="emp-tabel">
+    <div class="table-header">
+    <h3>Employee List</h3>
+    
+  </div>
     <div class="card">
       <p-table
-        [value]="allEmployees"
+        [value]="filteredEmployees"
         [tableStyle]="{ 'min-width': '50rem' }"
         [paginator]="true"
         [rows]="5"
@@ -104,8 +120,8 @@
         </ng-template>
         <ng-template #body let-emp>
           <tr>
-            <td>{{ emp.id }}</td>
-            <td>{{ emp.name }}</td>
+          <td>{{emp.id}}</td>
+            <td><a [routerLink]="['/dashboard/employee/',emp.id]">{{ emp.name }}</a></td>
             <td>{{ emp.email }}</td>
             <td>{{ emp.department }}</td>
             <td>{{ emp.position }}</td>
@@ -129,6 +145,8 @@
 
 @if(loadAddEmpModal){
 <app-add-employee (closeAddEmp)="closeAddEmployee()"></app-add-employee>
-} @if(loadEditEmpModal){
+} 
+
+@if(loadEditEmpModal){
 <app-edit-emp [empId]="empId" (closeEditEmp)="closeEditModal()"></app-edit-emp>
 }

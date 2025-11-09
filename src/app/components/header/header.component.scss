@@ -1,0 +1,108 @@
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--p-white-500);
+  padding: 1rem 2rem;
+  border-bottom: 1px solid var(--p-surface-300);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+ 
+
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    .header-icon {
+      background-color: var(--p-purple-100);
+      color: var(--p-purple-600);
+      font-size: 1.8rem;
+      border-radius: 12px;
+      padding: 0.6rem;
+    }
+
+    .header-title {
+      h2 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin: 0;
+        color: var(--p-purple-800);
+      }
+
+      span {
+        font-size: 0.85rem;
+        color: var(--p-text-secondary);
+      }
+    }
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+
+      .user-avatar {
+        background-color: var(--p-purple-100);
+        color: var(--p-purple-700);
+        width: 38px;
+        height: 38px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        font-weight: 600;
+      }
+
+      .user-role {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+
+        .user-name {
+          font-size: 0.9rem;
+          font-weight: 500;
+          color: var(--p-text-color);
+          margin-bottom: 3px;
+          margin-left: 4px;
+        }
+
+        .role-badge {
+          background-color: var(--p-purple-100);
+          color: var(--p-purple-700);
+          padding: 0.15rem 0.5rem;
+          border-radius: 10px;
+          font-size: 0.75rem;
+          font-weight: 500;
+        }
+      }
+    }
+
+    .logout-btn {
+      background-color: transparent;
+      border: 1px solid var(--p-purple-300);
+      color: var(--p-purple-700);
+      border-radius: 10px;
+      padding: 0.5rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+      font-size: 0.9rem;
+
+      &:hover {
+        background-color: var(--p-purple-100);
+      }
+
+      i {
+        font-size: 1rem;
+      }
+    }
+  }
+}

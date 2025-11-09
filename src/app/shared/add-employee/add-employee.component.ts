@@ -6,13 +6,13 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { CommonModule} from '@angular/common';
+import { CommonModule } from '@angular/common';
 
 import { Toast } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 
-import { Department, Employee } from '../models/employee.model';
-import { EmployeeService } from '../services/employee.service';
+import { Department, User } from '../../models/employee.model';
+import { EmployeeService } from '../../services/employee.service';
 
 @Component({
   selector: 'app-add-employee',
@@ -54,7 +54,7 @@ export class AddEmployeeComponent {
       this.userForm.markAllAsTouched();
       return;
     }
-    const newEmployee: Employee = this.userForm.value as Employee;
+    const newEmployee: User = this.userForm.value as User;
     this.empService.addEmployee(newEmployee);
     this.messageSerive.add({
       severity: 'success',

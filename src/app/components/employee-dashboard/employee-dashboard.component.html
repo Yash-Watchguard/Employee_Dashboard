@@ -1,0 +1,71 @@
+<div class="employee-dashboard">
+  <div class="dashboard-content">
+    <!-- Profile Card -->
+    <div class="profile-card p-card">
+      <div class="profile-header">
+        <i class="pi pi-user profile-icon"></i>
+        <div class="profile-info">
+          <h2>{{ employee?.name }}</h2>
+          <p>{{ employee?.position }}</p>
+          <div class="badges">
+            <p-tag value="{{ employee?.position }}" severity="info"></p-tag>
+            <p-tag value="Employee ID: {{ employee?.id }}" severity="secondary"></p-tag>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Info Grid -->
+    <div class="info-grid">
+      <!-- Contact Information -->
+      <div class="info-card p-card">
+        <h3>Contact Information</h3>
+        <div class="info-item">
+          <i class="pi pi-envelope" ></i>
+          <div>
+            <p class="label">Email Address</p>
+            <p class="value">{{ employee?.email }}</p>
+          </div>
+        </div>
+        <div class="info-item">
+          <i class="pi pi-id-card"></i>
+          <div>
+            <p class="label">Full Name</p>
+            <p class="value">{{ employee?.name }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Employment Details -->
+      <div class="info-card p-card">
+        <h3>Employment Details</h3>
+        <div class="info-item">
+          <i class="pi pi-briefcase"></i>
+          <div>
+            <p class="label">Position</p>
+            <p class="value">{{ employee?.position }}</p>
+          </div>
+        </div>
+        <div class="info-item">
+          <i class="pi pi-building"></i>
+          <div>
+            <p class="label">Department</p>
+            <p class="value">{{ employee?.department }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Annual Salary -->
+      <div class="info-card p-card salary-card">
+        <h3><i class="pi pi-indian-rupee"></i> Monthly Salary</h3>
+        <p class="salary-value">{{ employee?.salary}}</p>
+      </div>
+
+      <!-- User Role -->
+      <div class="info-card p-card role-card">
+        <h3><i class="pi pi-chart-line"></i> User Role</h3>
+        <p class="role-value">{{ employee?.role }}</p>
+      </div>
+    </div>
+  </div>
+</div>

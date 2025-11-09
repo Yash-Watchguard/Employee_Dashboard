@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
+  AbstractControl,
   FormControl,
   FormGroup,
   ReactiveFormsModule,
@@ -8,8 +9,8 @@ import {
 
 import { Toast } from 'primeng/toast';
 
-import { Department, Employee } from '../models/employee.model';
-import { EmployeeService } from '../services/employee.service';
+import { Department, User } from '../../models/employee.model';
+import { EmployeeService } from '../../services/employee.service';
 import { CommonModule, NgIf } from '@angular/common';
 import { MessageService } from 'primeng/api';
 
@@ -17,16 +18,16 @@ import { MessageService } from 'primeng/api';
   selector: 'app-edit-emp',
   imports: [ReactiveFormsModule, CommonModule, Toast],
   templateUrl: './edit-emp.component.html',
-  styleUrl: './edit-emp.component.scss'
+  styleUrl: './edit-emp.component.scss',
 })
-export class EditEmpComponent implements OnInit{
-constructor(
+export class EditEmpComponent implements OnInit {
+  constructor(
     private empService: EmployeeService,
     private messageSerive: MessageService
   ) {}
 
-  @Input({required:true}) empId!:number;
-  @Output() closeEditEmp = new EventEmitter();
+  @Input({ required: true }) empId!: number;
+  @Output() closeEditEmp: EventEmitter<void> = new EventEmitter();
 
   departmentList: Department[] = [
     Department.ENGINEERING,
@@ -36,17 +37,20 @@ constructor(
     Department.SALES,
   ];
   userForm!: FormGroup;
-   
-  ngOnInit():void{
-      const emp:Employee[]=this.empService.getEmployeeById(this.empId);
-      this.userForm=new FormGroup({
-      id: new FormControl(emp[0].id),
-    name: new FormControl(emp[0].name, Validators.required),
-    email: new FormControl(emp[0].email, [Validators.required, Validators.email]),
-    department: new FormControl(emp[0].department, [Validators.required]),
-    position: new FormControl(emp[0].position, [Validators.required]),
-    salary: new FormControl(emp[0].salary, Validators.min(0)),
-      });
+
+  ngOnInit(): void {
+    const emp: User | undefined = this.empService.getEmployeeById(this.empId);
+    this.userForm = new FormGroup({
+      id: new FormControl(emp?.id),
+      name: new FormControl(emp?.name, Validators.required),
+      email: new FormControl(emp?.email, [
+        Validators.required,
+        Validators.email,
+      ]),
+      department: new FormControl(emp?.department, [Validators.required]),
+      position: new FormControl(emp?.position, [Validators.required]),
+      salary: new FormControl(emp?.salary, Validators.min(0)),
+    });
   }
 
   get f() {
@@ -58,7 +62,7 @@ constructor(
       this.userForm.markAllAsTouched();
       return;
     }
-    const newEmployee: Employee = this.userForm.value as Employee;
+    const newEmployee: User = this.userForm.value as User;
     this.empService.updateEmployee(newEmployee);
     this.messageSerive.add({
       severity: 'success',
@@ -67,8 +71,8 @@ constructor(
     });
     this.onCancel();
   }
-  onCancel() {
+
+  onCancel(): void {
     this.closeEditEmp.emit();
   }
-
 }

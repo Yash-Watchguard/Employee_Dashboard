@@ -1,97 +1,23 @@
 import { Injectable } from '@angular/core';
-import { Department, Employee } from '../models/employee.model';
+import { Department, User } from '../models/employee.model';
 import { BehaviorSubject } from 'rxjs';
+import { EMPLOYEE_DATA } from '../shared/constants';
 
 @Injectable({ providedIn: 'root' })
 export class EmployeeService {
-  private employeeData: Employee[] = [
-    {
-      id: 1,
-      name: 'yash',
-      email: 'yashgoyal32023@gmail.com',
-      position: 'Intern',
-      department: Department.INTERN,
-      salary: 30000,
-    },
-    {
-      id: 2,
-      name: 'manvendra',
-      email: 'manvendragoyal32023@gmail.com',
-      position: 'Intern',
-      department: Department.INTERN,
-      salary: 30000,
-    },
-    {
-      id: 3,
-      name: 'tanisha',
-      email: 'tanishagoyal32023@gmail.com',
-      position: 'Intern',
-      department: Department.INTERN,
-      salary: 30000,
-    },
-    {
-      id: 4,
-      name: 'jaid',
-      email: 'jaid32023@gmail.com',
-      position: 'software engineer 2',
-      department: Department.ENGINEERING,
-      salary: 30000,
-    },
-    {
-      id: 5,
-      name: 'krishna',
-      email: 'krishna32023@gmail.com',
-      position: 'software engineer 1',
-      department: Department.SALES,
-      salary: 30000,
-    },
-    {
-      id: 6,
-      name: 'krishna',
-      email: 'krishna32023@gmail.com',
-      position: 'software engineer 1',
-      department: Department.HR,
-      salary: 30000,
-    },
-    {
-      id: 7,
-      name: 'krishna',
-      email: 'krishna32023@gmail.com',
-      position: 'software engineer 1',
-      department: Department.FINANCE,
-      salary: 300000,
-    },
-    {
-      id: 8,
-      name: 'krishna goyal',
-      email: 'krishna32023@gmail.com',
-      position: 'software engineer 1',
-      department: Department.FINANCE,
-      salary: 300000,
-    },
-    {
-      id: 9,
-      name: 'saloni',
-      email: 'saloni32023@gmail.com',
-      position: 'executive',
-      department: Department.SALES,
-      salary: 30000,
-    }
-  ];
+  employeeData: User[] = [...EMPLOYEE_DATA];
 
-  //    create  a behaviour subject
+  count = 0;
 
-  count: number = 9;
-
-  private employeeSubject = new BehaviorSubject<Employee[]>([]);
+  private employeeSubject = new BehaviorSubject<User[]>([]);
   employees$ = this.employeeSubject.asObservable();
 
   constructor() {
-    this.saveToLocalStorage();
-    this.loadFromLocalStorage();
+    // this.saveToLocalStorage();
+    // this.loadFromLocalStorage();
   }
 
-  private loadFromLocalStorage(): void {
+  loadFromLocalStorage(): void {
     const storedData = localStorage.getItem('employeeData');
     if (storedData) {
       this.employeeData = JSON.parse(storedData);
@@ -101,7 +27,7 @@ export class EmployeeService {
     this.employeeSubject.next([...this.employeeData]);
   }
 
-  private saveToLocalStorage(): void {
+  saveToLocalStorage(): void {
     localStorage.setItem('employeeData', JSON.stringify(this.employeeData));
   }
 
@@ -109,13 +35,14 @@ export class EmployeeService {
     this.employeeSubject.next([...this.employeeData]);
   }
 
-  addEmployee(emp: Employee) {
+  addEmployee(emp: User): void {
     emp.id = this.count++;
     this.employeeData.push(emp);
     this.saveToLocalStorage();
     this.employeeSubject.next([...this.employeeData]);
   }
-  updateEmployee(emp: Employee):void {
+
+  updateEmployee(emp: User): void {
     const index = this.employeeData.findIndex(
       (employee) => employee.id === emp.id
     );
@@ -123,14 +50,23 @@ export class EmployeeService {
     this.saveToLocalStorage();
     this.employeeSubject.next([...this.employeeData]);
   }
-  deleteEmployee(id: number):void {
+
+  deleteEmployee(id: number): void {
     this.employeeData = this.employeeData.filter((emp) => emp.id != id);
     this.saveToLocalStorage();
     this.employeeSubject.next([...this.employeeData]);
   }
 
-  getEmployeeById(id:number):Employee[]{
-      const emp=this.employeeData.filter((empl)=>empl.id===id);
-      return emp;
+  getEmployeeById(id: number): User|undefined {
+    const emp = this.employeeData.find((empl) => empl.id === id);
+    return emp;
+  }
+
+  getCurrentUser(): User | null{
+    const currentUser = localStorage.getItem('user');
+    if(currentUser){
+      return JSON.parse(currentUser);
+    }
+    return null
   }
 }

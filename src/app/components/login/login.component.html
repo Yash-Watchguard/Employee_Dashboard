@@ -1,0 +1,54 @@
+<p-toast></p-toast>
+<div class="login-container">
+
+  <div class="login-image">
+    <img src="image.png" alt="Login img">
+  </div>
+
+  <div class="login-form-container">
+    <div class="login-form-box">
+      <h2 class="form-title">Welcome Back </h2>
+      <p class="form-subtitle">Login to your account</p>
+
+      <form [formGroup]="loginForm" (ngSubmit)="login()" novalidate>
+
+        <div class="form-group">
+          <label for="email" class="form-label">
+            <i class="pi pi-envelope icon"></i> Email <span class="required">*</span>
+          </label>
+          <input type="text" id="email" formControlName="email" class="form-input" placeholder="Enter your email">
+
+          @if (loginForm.controls['email'].touched && loginForm.controls['email'].invalid) {
+            <div class="validation-error">
+              @if (loginForm.controls.email.errors?.['required']) {
+                <p>Email is required</p>
+              }
+              @if (loginForm.controls['email'].errors?.['email']) {
+                <p>Please enter a valid email address</p>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="password" class="form-label">
+            <i class="pi pi-lock icon"></i> Password <span class="required">*</span>
+          </label>
+          <input type="password" id="password" formControlName="password" class="form-input" placeholder="Enter your password">
+
+          @if (loginForm.controls['password'].touched && loginForm.controls['password'].invalid) {
+            <div class="validation-error">
+              @if (loginForm.controls['password'].errors?.['required']) {
+                <p>Password is required</p>
+              }
+            </div>
+          }
+        </div>
+
+        <button class="form-button" type="submit" [disabled]="loginForm.invalid">
+          <i class="pi pi-sign-in"></i> Login
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
