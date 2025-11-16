@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { WildCardComponent } from './wild-card.component';
 
-describe('WildCardComponent', () => {
+fdescribe('WildCardComponent', () => {
   let component: WildCardComponent;
   let fixture: ComponentFixture<WildCardComponent>;
 
@@ -20,4 +20,10 @@ describe('WildCardComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('go back',()=>{
+    spyOn(history,'back')
+    component.goBack()
+    expect(history.back).toHaveBeenCalled
+  })
 });

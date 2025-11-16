@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   effect,
@@ -22,7 +23,7 @@ import { EmployeeService } from '../../services/employee.service';
 import { AppConfigService } from '../../services/app-config.service';
 import { ChartModule } from 'primeng/chart';
 
-import { EditEmpComponent } from '../../shared/edit-emp/add-edit-emp.component';
+import { EditEmpComponent } from '../../shared/add-edit-emp/add-edit-emp.component';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -40,6 +41,7 @@ import { EditEmpComponent } from '../../shared/edit-emp/add-edit-emp.component';
   templateUrl: './admin-dashboard.component.html',
   styleUrl: './admin-dashboard.component.scss',
   providers: [ConfirmationService, MessageService],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AdminDashboardComponent implements OnInit {
   constructor(
@@ -86,7 +88,6 @@ export class AdminDashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadEmployeeStates();
-    this.initChart();
   }
 
   loadEmployeeStates(): void {
@@ -98,6 +99,14 @@ export class AdminDashboardComponent implements OnInit {
     const departmentSalary: { [key: string]: number } = {};
 
     this.employee$.subscribe((emp) => {
+      this.barChartLabels = [];
+      this.barChartData = [];
+      this.piChartLables = [];
+      this.piChartData = [];
+
+      const departmentCount: { [key: string]: number } = {};
+      const departmentSalary: { [key: string]: number } = {};
+
       this.allEmployees = emp;
       this.filteredEmployees = emp.filter((emp) => {
         return emp.role === Role.Employee;
@@ -116,18 +125,21 @@ export class AdminDashboardComponent implements OnInit {
       emp.forEach((data) => {
         if (departmentCount[data.department]) {
           departmentCount[data.department]++;
-          departmentSalary[data.department]+=data.salary;
+          departmentSalary[data.department] += data.salary;
         } else {
           departmentCount[data.department] = 1;
-          departmentSalary[data.department]=data.salary;
+          departmentSalary[data.department] = data.salary;
         }
       });
 
       this.barChartLabels = Object.keys(departmentCount);
       this.barChartData = Object.values(departmentCount);
 
-      this.piChartData=Object.values(departmentSalary);
-      this.piChartLables=Object.keys(departmentSalary);
+      this.piChartData = Object.values(departmentSalary);
+      this.piChartLables = Object.keys(departmentSalary);
+
+      this.initChart();
+      this.cd.detectChanges();
     });
   }
 

@@ -22,7 +22,7 @@ import { MessageService } from 'primeng/api';
   providers: [MessageService],
 })
 export class LoginComponent implements OnInit {
-  // first create the login form
+ 
   constructor(
     private router: Router,
     private authService: AuthService,
@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
     password: new FormControl<string>('', [Validators.required]),
   });
 
-  login(): void {
+  onLogin(): void {
     if (this.loginForm.valid) {
       this.userDetails = this.loginForm.value as Login;
 
