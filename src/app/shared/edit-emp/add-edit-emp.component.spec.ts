@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EditEmpComponent } from './edit-emp.component';
+import { EditEmpComponent } from './add-edit-emp.component';
 
 describe('EditEmpComponent', () => {
   let component: EditEmpComponent;
@@ -8,9 +8,8 @@ describe('EditEmpComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [EditEmpComponent]
-    })
-    .compileComponents();
+      imports: [EditEmpComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(EditEmpComponent);
     component = fixture.componentInstance;

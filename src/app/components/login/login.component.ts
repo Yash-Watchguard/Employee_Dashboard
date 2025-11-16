@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -11,7 +11,7 @@ import { Login } from '../../models/login.model';
 import { User } from '../../models/employee.model';
 import { Role } from '../../models/employee.model';
 import { AuthService } from '@/app/services/auth.service';
-import { Toast } from "primeng/toast";
+import { Toast } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 
 @Component({
@@ -19,11 +19,19 @@ import { MessageService } from 'primeng/api';
   imports: [ReactiveFormsModule, Toast],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
-  providers:[MessageService]
+  providers: [MessageService],
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   // first create the login form
-  constructor(private router: Router, private authService: AuthService, private messageService:MessageService) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private messageService: MessageService
+  ) {}
+
+  ngOnInit(): void {
+    this.loginForm.reset();
+  }
 
   private userDetails: Login = { email: '', password: '' };
 
@@ -41,12 +49,12 @@ export class LoginComponent {
         this.userDetails.password
       );
 
-      if (user!=null) {
-          this.router.navigate(['/dashboard'], {
-            replaceUrl: true,
-          });
+      if (user != null) {
+        this.router.navigate(['/dashboard'], {
+          replaceUrl: true,
+        });
       } else {
-         this.messageService.add({
+        this.messageService.add({
           severity: 'error',
           summary: 'Error',
           detail: 'Please enter valid email or password',

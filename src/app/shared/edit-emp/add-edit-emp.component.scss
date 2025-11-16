@@ -16,6 +16,8 @@
 .modal-content {
   width: 500px;
   max-width: 90%;
+  max-height: 80%;
+  overflow-x: auto;
   height: max-content;
   padding: 2rem;
   background-color: white;
@@ -138,6 +140,38 @@
       &:hover {
         background-color: #f0f0f0;
       }
+    }
+  }
+
+  .submit-btn,
+  .cancel-btn {
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+
+  .submit-btn {
+    background-color: var(--p-purple-400);
+    color: white;
+    border: none;
+    &:hover {
+      background-color: var(--mdark-purple-text);
+    }
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+  }
+
+  .cancel-btn {
+    background-color: white;
+    color: var(--p-black-700);
+    border: 1px solid var(--cancel-btn-border);
+    &:hover {
+      background-color: #f0f0f0;
     }
   }
 }

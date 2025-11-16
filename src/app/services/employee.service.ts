@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
-import { Department, User } from '../models/employee.model';
+import { Injectable, OnInit } from '@angular/core';
+import { Department, Role, User } from '../models/employee.model';
 import { BehaviorSubject } from 'rxjs';
 import { EMPLOYEE_DATA } from '../shared/constants';
 
 @Injectable({ providedIn: 'root' })
-export class EmployeeService {
+export class EmployeeService  {
   employeeData: User[] = [...EMPLOYEE_DATA];
 
   count = 0;
@@ -13,9 +13,10 @@ export class EmployeeService {
   employees$ = this.employeeSubject.asObservable();
 
   constructor() {
-    // this.saveToLocalStorage();
-    // this.loadFromLocalStorage();
+    this.loadFromLocalStorage();
+    this.saveToLocalStorage();
   }
+  
 
   loadFromLocalStorage(): void {
     const storedData = localStorage.getItem('employeeData');
@@ -37,7 +38,9 @@ export class EmployeeService {
 
   addEmployee(emp: User): void {
     emp.id = this.count++;
+   
     this.employeeData.push(emp);
+    
     this.saveToLocalStorage();
     this.employeeSubject.next([...this.employeeData]);
   }
@@ -57,16 +60,16 @@ export class EmployeeService {
     this.employeeSubject.next([...this.employeeData]);
   }
 
-  getEmployeeById(id: number): User|undefined {
+  getEmployeeById(id: number): User | undefined {
     const emp = this.employeeData.find((empl) => empl.id === id);
     return emp;
   }
 
-  getCurrentUser(): User | null{
+  getCurrentUser(): User | null {
     const currentUser = localStorage.getItem('user');
-    if(currentUser){
+    if (currentUser) {
       return JSON.parse(currentUser);
     }
-    return null
+    return null;
   }
 }

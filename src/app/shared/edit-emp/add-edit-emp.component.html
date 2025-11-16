@@ -9,7 +9,7 @@
       
     </header>
 
-    <form (ngSubmit)="OnSubmit()" [formGroup]="userForm">
+    <form [formGroup]="userForm">
       <div class="form-group">
         <label for="name" class="form-label">Name *</label>
         <input
@@ -19,10 +19,13 @@
           formControlName="name"
           placeholder="Enter name"
         />
-        @if(f['name'].touched && f['name'].invalid){
+        @if(formControlGetter['name'].touched && formControlGetter['name'].invalid){
         <div class="validation-error">
-          @if(f['name'].errors?.['required']){
+          @if(formControlGetter['name'].errors?.['required']){
           <div>Name is required.</div>
+          }
+          @if(formControlGetter['name'].errors?.['htmlTagsNotAllowed']){
+            <div>HTML tags are not allowed!</div>
           }
         </div>
         }
@@ -37,13 +40,30 @@
           formControlName="email"
           placeholder="Enter email"
         />
-        @if(f['email'].touched && f['email'].invalid){
+        @if(formControlGetter['email'].touched && formControlGetter['email'].invalid){
         <div class="validation-error">
-          @if(f['email'].errors?.['required']){
+          @if(formControlGetter['email'].errors?.['required']){
           <div>Email is required.</div>
-          } @if(f['email'].errors?.['email']){
+          } @if(formControlGetter['email'].errors?.['email']){
           <div>Please enter a valid email.</div>
           }
+        </div>
+        }
+      </div>
+      <div class="form-group">
+        <label for="password" class="form-label">Password</label>
+        <input
+          type="text"
+          class="form-input"
+          id="password"
+          formControlName="password"
+          placeholder="Enter password"
+        />
+        @if(formControlGetter['password'].touched && formControlGetter['password'].invalid){
+        <div class="validation-error">
+          @if(formControlGetter['password'].errors?.['required']){
+          <div>Email is required.</div>
+          } 
         </div>
         }
       </div>
@@ -56,9 +76,9 @@
           <option [value]="dept">{{ dept }}</option>
           }
         </select>
-        @if(f['department'].touched && f['department'].invalid){
+        @if(formControlGetter['department'].touched && formControlGetter['department'].invalid){
         <div class="validation-error">
-          @if(f['department'].errors?.['required']){
+          @if(formControlGetter['department'].errors?.['required']){
           <div>Department is required.</div>
           }
         </div>
@@ -74,10 +94,13 @@
           formControlName="position"
           placeholder="Enter position"
         />
-        @if(f['position'].touched && f['position'].invalid){
+        @if(formControlGetter['position'].touched && formControlGetter['position'].invalid){
         <div class="validation-error">
-          @if(f['position'].errors?.['required']){
+          @if(formControlGetter['position'].errors?.['required']){
           <div>Position is required.</div>
+          }
+           @if(formControlGetter['position'].errors?.['htmlTagsNotAllowed']){
+            <div>HTML tags are not allowed!</div>
           }
         </div>
         }
@@ -92,11 +115,11 @@
           formControlName="salary"
           placeholder="Enter salary"
         />
-        @if(f['salary'].touched && f['salary'].invalid){
+        @if(formControlGetter['salary'].touched && formControlGetter['salary'].invalid){
         <div class="validation-error">
-          @if(f['salary'].errors?.['required']){
+          @if(formControlGetter['salary'].errors?.['required']){
           <div>Salary is required.</div>
-          } @if(f['salary'].errors?.['min']){
+          } @if(formControlGetter['salary'].errors?.['min']){
           <div>Salary must be a positive number.</div>
           }
         </div>
@@ -107,9 +130,16 @@
         <button type="button" class="cancel-btn" (click)="onCancel()">
           Cancel
         </button>
-        <button type="submit" class="submit-btn" [disabled]="userForm.invalid">
+        @if(empId!=0){
+          <button type="submit" class="submit-btn" [disabled]="userForm.invalid" (click)="SaveChanges()">
           Save
         </button>
+        }@else {
+          <button type="submit" class="submit-btn" [disabled]="userForm.invalid" (click)="AddEmployee()">
+          Add Employee
+        </button>
+        }
+        
       </div>
     </form>
   </div>

@@ -73,12 +73,18 @@
         }
 
         .role-badge {
-          background-color: var(--p-purple-100);
+          background-color: var(--p-purple-500);
           color: var(--p-purple-700);
           padding: 0.15rem 0.5rem;
           border-radius: 10px;
           font-size: 0.75rem;
           font-weight: 500;
+       
+          color:white;width: 60px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
         }
       }
     }

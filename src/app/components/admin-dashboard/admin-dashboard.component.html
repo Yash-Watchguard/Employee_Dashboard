@@ -69,7 +69,7 @@
     <div class="pi">
       <div class="chart-container">
         <div class="chart-header">
-          <h4>Department Distribution - Pie Chart</h4>
+          <h4>Department Payroll Distribution - Pie Chart</h4>
         </div>
         <div class="chart-wrapper2">
           <p-chart
@@ -144,9 +144,9 @@
 </div>
 
 @if(loadAddEmpModal){
-<app-add-employee (closeAddEmp)="closeAddEmployee()"></app-add-employee>
+<app-edit-emp (closePopup)="closeAddEmployee()"></app-edit-emp>
 } 
 
 @if(loadEditEmpModal){
-<app-edit-emp [empId]="empId" (closeEditEmp)="closeEditModal()"></app-edit-emp>
+<app-edit-emp [empId]="empId" (closePopup)="closeEditModal()"></app-edit-emp>
 }

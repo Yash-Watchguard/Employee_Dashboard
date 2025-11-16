@@ -1,10 +1,6 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
-import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
-import { AddEmployeeComponent } from './shared/add-employee/add-employee.component';
-import { EditEmpComponent } from './shared/edit-emp/edit-emp.component';
-import { WildCardComponent } from './components/wild-card/wild-card.component';
-import { input } from '@angular/core';
+
 import { AuthGuard } from './guards/auth.guard';
 import { AdminGuard } from './guards/admin.guard';
 
@@ -35,13 +31,13 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
     canActivateChild: [AuthGuard],
     children: [
-      // {
-      //   path: '',
-      //   loadComponent: () =>
-      //     import('./components/dashboard/dashboard.component').then(
-      //       (c) => c.DashboardComponent
-      //     ),
-      // },
+      {
+        path: '',
+        loadComponent: () =>
+          import('./components/dashboard/dashboard.component').then(
+            (c) => c.DashboardComponent
+          ),
+      },
       {
         path: 'admin',
         canActivate: [AdminGuard],

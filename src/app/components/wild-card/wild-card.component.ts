@@ -4,8 +4,10 @@ import { Component } from '@angular/core';
   selector: 'app-wild-card',
   imports: [],
   templateUrl: './wild-card.component.html',
-  styleUrl: './wild-card.component.scss'
+  styleUrl: './wild-card.component.scss',
 })
 export class WildCardComponent {
-
+  goBack(): void {
+    history.back();
+  }
 }

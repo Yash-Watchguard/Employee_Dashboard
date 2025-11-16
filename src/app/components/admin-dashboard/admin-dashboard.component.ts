@@ -2,12 +2,13 @@ import {
   ChangeDetectorRef,
   Component,
   effect,
-  inject,
-  OnDestroy,
+  Inject,
   OnInit,
   PLATFORM_ID,
 } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmDialog } from 'primeng/confirmdialog';
@@ -20,23 +21,21 @@ import { Role, User } from '../../models/employee.model';
 import { EmployeeService } from '../../services/employee.service';
 import { AppConfigService } from '../../services/app-config.service';
 import { ChartModule } from 'primeng/chart';
-import { AddEmployeeComponent } from '../../shared/add-employee/add-employee.component';
-import { EditEmpComponent } from '../../shared/edit-emp/edit-emp.component';
-import { RouterLink } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+
+import { EditEmpComponent } from '../../shared/edit-emp/add-edit-emp.component';
 
 @Component({
   selector: 'app-admin-dashboard',
   imports: [
     ChartModule,
     CommonModule,
-    AddEmployeeComponent,
+
     TableModule,
     EditEmpComponent,
     ConfirmDialog,
     Toast,
     RouterLink,
-    FormsModule
+    FormsModule,
   ],
   templateUrl: './admin-dashboard.component.html',
   styleUrl: './admin-dashboard.component.scss',
@@ -47,10 +46,12 @@ export class AdminDashboardComponent implements OnInit {
     private employeeService: EmployeeService,
     private cd: ChangeDetectorRef,
     private messageService: MessageService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private configService: AppConfigService,
+    @Inject(PLATFORM_ID) private platformId: object
   ) {}
 
-  searchTerm:string='';
+  searchTerm: string = '';
 
   loadEditEmpModal: boolean = false;
   loadAddEmpModal: boolean = false;
@@ -58,9 +59,11 @@ export class AdminDashboardComponent implements OnInit {
   allEmployees: User[] = [];
   filteredEmployees: User[] = [];
 
-  chartLabels: string[] = [];
+  barChartLabels: string[] = [];
+  piChartLables: string[] = [];
 
-  chartData: number[] = [];
+  piChartData: number[] = [];
+  barChartData: number[] = [];
 
   empId = 0;
   totalSalary = 0;
@@ -73,10 +76,6 @@ export class AdminDashboardComponent implements OnInit {
   pieData: any;
   chartOptions: any;
 
-  platformId = inject(PLATFORM_ID);
-
-  configService = inject(AppConfigService);
-
   themeEffect = effect(() => {
     if (this.configService.transitionComplete()()) {
       if (this.configService.preset()()) {
@@ -85,13 +84,9 @@ export class AdminDashboardComponent implements OnInit {
     }
   });
 
-  
-
   ngOnInit(): void {
     this.loadEmployeeStates();
     this.initChart();
-    this.employeeService.saveToLocalStorage();
-    this.employeeService.loadFromLocalStorage();
   }
 
   loadEmployeeStates(): void {
@@ -100,11 +95,12 @@ export class AdminDashboardComponent implements OnInit {
     this.employeeService.getEmployees();
 
     const departmentCount: { [key: string]: number } = {};
+    const departmentSalary: { [key: string]: number } = {};
 
     this.employee$.subscribe((emp) => {
       this.allEmployees = emp;
-      this.filteredEmployees=emp.filter((emp)=>{
-       return emp.role===Role.Employee;
+      this.filteredEmployees = emp.filter((emp) => {
+        return emp.role === Role.Employee;
       });
 
       this.totalSalary = this.allEmployees.reduce(
@@ -120,13 +116,18 @@ export class AdminDashboardComponent implements OnInit {
       emp.forEach((data) => {
         if (departmentCount[data.department]) {
           departmentCount[data.department]++;
+          departmentSalary[data.department]+=data.salary;
         } else {
           departmentCount[data.department] = 1;
+          departmentSalary[data.department]=data.salary;
         }
       });
 
-      this.chartLabels = Object.keys(departmentCount);
-      this.chartData = Object.values(departmentCount);
+      this.barChartLabels = Object.keys(departmentCount);
+      this.barChartData = Object.values(departmentCount);
+
+      this.piChartData=Object.values(departmentSalary);
+      this.piChartLables=Object.keys(departmentSalary);
     });
   }
 
@@ -143,11 +144,11 @@ export class AdminDashboardComponent implements OnInit {
       );
 
       this.basicData = {
-        labels: this.chartLabels,
+        labels: this.barChartLabels,
         datasets: [
           {
             label: 'Employees',
-            data: this.chartData,
+            data: this.barChartData,
             backgroundColor: [
               'rgb(249, 115, 22)',
               'rgb(6, 182, 212)',
@@ -198,10 +199,10 @@ export class AdminDashboardComponent implements OnInit {
       };
 
       this.pieData = {
-        labels: this.chartLabels,
+        labels: this.piChartLables,
         datasets: [
           {
-            data: this.chartData,
+            data: this.piChartData,
             backgroundColor: [
               'rgba(249, 115, 22, 0.2)',
               'rgba(6, 182, 212, 0.2)',
@@ -234,25 +235,18 @@ export class AdminDashboardComponent implements OnInit {
     }
   }
 
-  
-onSearch(): void {
-
-  const term=this.searchTerm.toLowerCase();
-  this.filteredEmployees=this.allEmployees.filter((emp)=>
-     emp.role!=Role.Admin && (emp.name.toLowerCase().includes(term)||
-      emp.email.toLowerCase().includes(term)||
-      emp.position.toLowerCase().includes(term)||
-      emp.department.toLowerCase().includes(term)||
-      emp.salary.toString().includes(term))
-  );
-  // const term = this.searchTerm.toLowerCase();
-  // this.filteredEmployees = this.allEmployees.filter((emp) =>
-  //   emp.name.toLowerCase().includes(term) ||
-  //   emp.email.toLowerCase().includes(term) ||
-  //   emp.department.toLowerCase().includes(term) ||
-  //   emp.position.toLowerCase().includes(term)
-  // );
-}
+  onSearch(): void {
+    const term = this.searchTerm.toLowerCase();
+    this.filteredEmployees = this.allEmployees.filter(
+      (emp) =>
+        emp.role != Role.Admin &&
+        (emp.name.toLowerCase().includes(term) ||
+          emp.email.toLowerCase().includes(term) ||
+          emp.position.toLowerCase().includes(term) ||
+          emp.department.toLowerCase().includes(term) ||
+          emp.salary.toString().includes(term))
+    );
+  }
 
   openAddEmployee(): void {
     this.loadAddEmpModal = true;
@@ -272,7 +266,7 @@ onSearch(): void {
     this.loadEditEmpModal = false;
   }
 
-  onDelete(id: number) {
+  onDelete(id: number): void {
     console.log(id);
     this.confirmationService.confirm({
       header: 'Are you sure?',
