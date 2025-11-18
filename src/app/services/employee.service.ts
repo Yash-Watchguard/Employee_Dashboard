@@ -14,7 +14,7 @@ export class EmployeeService  {
 
   constructor() {
     this.loadFromLocalStorage();
-    this.saveToLocalStorage();
+    // this.saveToLocalStorage();
   }
   
 
@@ -49,9 +49,11 @@ export class EmployeeService  {
     const index = this.employeeData.findIndex(
       (employee) => employee.id === emp.id
     );
+
     this.employeeData[index] = emp;
     this.saveToLocalStorage();
-    this.employeeSubject.next([...this.employeeData]);
+    console.log(this.employeeData)
+    this.employeeSubject.next(this.employeeData);
   }
 
   deleteEmployee(id: number): void {

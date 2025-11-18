@@ -112,6 +112,8 @@ export class AdminDashboardComponent implements OnInit {
         return emp.role === Role.Employee;
       });
 
+      console.log(this.filteredEmployees);
+
       this.totalSalary = this.allEmployees.reduce(
         (sum, emp) => sum + emp.salary,
         0
@@ -139,7 +141,7 @@ export class AdminDashboardComponent implements OnInit {
       this.piChartLables = Object.keys(departmentSalary);
 
       this.initChart();
-      this.cd.detectChanges();
+      // this.cd.detectChanges();
     });
   }
 
@@ -248,7 +250,8 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   onSearch(): void {
-    const term = this.searchTerm.toLowerCase();
+    this.searchTerm = this.searchTerm.trim();
+    let term = this.searchTerm.toLowerCase();
     this.filteredEmployees = this.allEmployees.filter(
       (emp) =>
         emp.role != Role.Admin &&
