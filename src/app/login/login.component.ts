@@ -7,9 +7,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Login } from '../../models/login.model';
-import { User } from '../../models/employee.model';
-import { Role } from '../../models/employee.model';
+import { Login } from '../models/login.model';
+import { User } from '../models/employee.model';
+import { Role } from '../models/employee.model';
 import { AuthService } from '@/app/services/auth.service';
 import { Toast } from 'primeng/toast';
 import { MessageService } from 'primeng/api';

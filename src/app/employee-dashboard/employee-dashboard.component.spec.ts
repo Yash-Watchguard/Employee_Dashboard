@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { EmployeeDashboardComponent } from './employee-dashboard.component';
-import { EmployeeService } from '@/app/services/employee.service';
+import { EmployeeService } from '../services/employee.service';
 import { ActivatedRoute } from '@angular/router';
-import { User, Department, Role } from '@/app/models/employee.model';
+import { User, Department, Role } from '../models/employee.model';
 
 fdescribe('EmployeeDashboardComponent', () => {
   let component: EmployeeDashboardComponent;

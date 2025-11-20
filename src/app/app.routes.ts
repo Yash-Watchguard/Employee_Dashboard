@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './components/home/home.component';
+import { HomeComponent } from './home/home.component';
 
 import { AuthGuard } from './guards/auth.guard';
 import { AdminGuard } from './guards/admin.guard';
@@ -18,14 +18,14 @@ export const routes: Routes = [
   {
     path: 'login',
     loadComponent: () =>
-      import('./components/login/login.component').then(
+      import('./login/login.component').then(
         (c) => c.LoginComponent
       ),
   },
   {
     path: 'dashboard',
     loadComponent: () =>
-      import('./components/dashboard/dashboard.component').then(
+      import('./dashboard/dashboard.component').then(
         (m) => m.DashboardComponent
       ),
     canActivate: [AuthGuard],
@@ -34,7 +34,7 @@ export const routes: Routes = [
       {
         path: '',
         loadComponent: () =>
-          import('./components/dashboard/dashboard.component').then(
+          import('./dashboard/dashboard.component').then(
             (c) => c.DashboardComponent
           ),
       },
@@ -42,7 +42,7 @@ export const routes: Routes = [
         path: 'admin',
         canActivate: [AdminGuard],
         loadComponent: () =>
-          import('./components/admin-dashboard/admin-dashboard.component').then(
+          import('./admin-dashboard/admin-dashboard.component').then(
             (m) => m.AdminDashboardComponent
           ),
       },
@@ -50,7 +50,7 @@ export const routes: Routes = [
         path: 'employee/:id',
         loadComponent: () =>
           import(
-            './components/employee-dashboard/employee-dashboard.component'
+            './employee-dashboard/employee-dashboard.component'
           ).then((m) => m.EmployeeDashboardComponent),
       },
     ],
@@ -58,14 +58,14 @@ export const routes: Routes = [
   {
     path: 'error-page',
     loadComponent: () =>
-      import('./components/wild-card/wild-card.component').then(
+      import('./wild-card/wild-card.component').then(
         (c) => c.WildCardComponent
       ),
   },
   {
     path: '**',
     loadComponent: () =>
-      import('./components/wild-card/wild-card.component').then(
+      import('./wild-card/wild-card.component').then(
         (c) => c.WildCardComponent
       ),
   },

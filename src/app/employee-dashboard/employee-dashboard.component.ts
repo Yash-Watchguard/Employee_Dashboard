@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { TagModule } from 'primeng/tag';
-import { User } from '@/app/models/employee.model';
-import { EmployeeService } from '@/app/services/employee.service';
 import { ActivatedRoute } from '@angular/router';
+
+import { TagModule } from 'primeng/tag';
+
+import { User } from '../models/employee.model';
+import { EmployeeService } from '../services/employee.service';
 
 @Component({
   selector: 'app-employee-dashboard',

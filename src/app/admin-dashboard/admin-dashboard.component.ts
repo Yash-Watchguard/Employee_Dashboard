@@ -15,15 +15,15 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmDialog } from 'primeng/confirmdialog';
 import { Toast } from 'primeng/toast';
 import { TableModule } from 'primeng/table';
+import { ChartModule } from 'primeng/chart';
 
 import { Observable } from 'rxjs';
 
-import { Role, User } from '../../models/employee.model';
-import { EmployeeService } from '../../services/employee.service';
-import { AppConfigService } from '../../services/app-config.service';
-import { ChartModule } from 'primeng/chart';
+import { Role, User } from '../models/employee.model';
+import { EmployeeService } from '../services/employee.service';
+import { AppConfigService } from '../services/app-config.service';
 
-import { EditEmpComponent } from '../../shared/add-edit-emp/add-edit-emp.component';
+import { EditEmpComponent } from '../shared/add-edit-emp/add-edit-emp.component';
 
 @Component({
   selector: 'app-admin-dashboard',
