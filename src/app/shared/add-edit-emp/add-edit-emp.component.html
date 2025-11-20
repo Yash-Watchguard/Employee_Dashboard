@@ -4,14 +4,18 @@
     <header class="modal-header">
       <div class="modal-title-container">
         <i class="plus-icon"></i>
+        @if(empId==0){
+          <h2>Add Employee</h2>
+        }@else{
         <h2>Edit Employee data</h2>
+        }
       </div>
       
     </header>
 
     <form [formGroup]="userForm">
       <div class="form-group">
-        <label for="name" class="form-label">Name *</label>
+        <label for="name" class="form-label">Name <i class="required">*</i></label>
         <input
           type="text"
           class="form-input"
@@ -32,7 +36,7 @@
       </div>
 
       <div class="form-group">
-        <label for="email" class="form-label">Email</label>
+        <label for="email" class="form-label">Email <i class="required">*</i></label>
         <input
           type="email"
           class="form-input"
@@ -51,7 +55,7 @@
         }
       </div>
       <div class="form-group">
-        <label for="password" class="form-label">Password</label>
+        <label for="password" class="form-label">Password <i class="required">*</i></label>
         <input
           type="text"
           class="form-input"
@@ -69,7 +73,7 @@
       </div>
 
       <div class="form-group">
-        <label for="department" class="form-label">Department</label>
+        <label for="department" class="form-label">Department <i class="required">*</i></label>
         <select class="form-input" id="department" formControlName="department">
           <option value="" disabled>Select department</option>
           @for(dept of departmentList; track dept){
@@ -86,7 +90,7 @@
       </div>
 
       <div class="form-group">
-        <label for="position" class="form-label">Position</label>
+        <label for="position" class="form-label">Position <i class="required">*</i></label>
         <input
           type="text"
           class="form-input"
@@ -107,7 +111,7 @@
       </div>
 
       <div class="form-group">
-        <label for="salary" class="form-label">Salary</label>
+        <label for="salary" class="form-label">Salary <i class="required">*</i></label>
         <input
           type="number"
           class="form-input"

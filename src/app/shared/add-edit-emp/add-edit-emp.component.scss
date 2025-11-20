@@ -141,6 +141,7 @@
         background-color: #f0f0f0;
       }
     }
+    
   }
 
   .submit-btn,
@@ -184,4 +185,8 @@
   color: red;
   font-size: 12px;
   line-height: 1;
+}
+
+.required {
+    color: red;
 }

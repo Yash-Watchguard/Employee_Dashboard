@@ -68,6 +68,7 @@ export class EditEmpComponent implements OnInit {
       position: new FormControl(emp?.position, [Validators.required,noHtmlTagsValidator()]),
       salary: new FormControl(emp?.salary, Validators.min(0)),
       password:new FormControl(emp?.password,Validators.required),
+      role:new FormControl<Role>(Role.Employee)
     });
   }
 
